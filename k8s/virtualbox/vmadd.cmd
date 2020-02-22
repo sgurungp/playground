@@ -14,7 +14,7 @@ REM installation capabilities than would otherwise be available natively in
 REM VirtualBox. 
 
 SET ISO="C:\Users\%USERID%\VirtualBox\ISOs\CentOS-7-x86_64-Minimal-1908.iso"
-SET KS="C:\Users\%USERID%\Documents\kickstart.vbox.cfg"
+SET KS="C:\Users\%USERID%\Documents\vbox-k8s.ks.cfg"
 
 SET VM=mynode.k8s
 SET /P VM="Enter a name for your VM, e.g. 'node34': "
