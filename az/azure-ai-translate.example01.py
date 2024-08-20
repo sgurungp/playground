@@ -1,7 +1,9 @@
-# Example code demonstrating how to use Azure AI Translator to translate text.
-# Modified from the sample offered by the Azure portal to pass pylint
-# checking and to use a multiline string as the sample text to translate.
-#
+"""
+ Example code demonstrating how to use Azure AI Translator to translate text.
+ Modified from the sample offered by the Azure portal to pass pylint
+ checking and to use a multiline string as the sample text to translate.
+"""
+
 import uuid
 import json
 import requests
