@@ -61,7 +61,10 @@ body = [
         }
       ]
 
-request = requests.post(CONSTRUCTED_URL, params=params, headers=headers, json=body)
+# Timeout for web requests, in seconds
+TIMEOUT=5
+
+request = requests.post(CONSTRUCTED_URL, params=params, headers=headers, json=body, timeout=TIMEOUT)
 response = request.json()
 
 print(json.dumps(response, sort_keys=True, ensure_ascii=False, indent=2, separators=(',', ': ')))
