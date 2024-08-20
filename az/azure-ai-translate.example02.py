@@ -23,7 +23,7 @@ def makereq(xibody, xiparams):
 
     ## Build the headers for the request.
     # Add your key and endpoint
-    key = <<REPLACE ME>>
+    key = "<<REPLACE ME>>"
 
     # location, also known as region.
     # required if you're using a multi-service or regional (not global) resource.
