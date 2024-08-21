@@ -2,66 +2,37 @@
  Example code demonstrating how to use Azure AI Translator to translate text
  and mark profanity.
 """
+from azait01 import makereq
 
-import uuid
-import json
-import requests
-
-def makereq(xibody, xiparams):
+def az_ai_translate_lookup(xiparams):
     """
       Construct a request to the Azure Translation service,
       translating from French to English and displaying the result.
     """
 
-    ## URL we'll be requesting
-    endpoint = "https://api.cognitive.microsofttranslator.com"
-    path = '/translate'
-    url = endpoint + path
+    lservice = 'translate'
 
-    # Timeout for web requests, in seconds
-    timeout=5
-
-    ## Build the headers for the request.
-    # Add your key and endpoint
-    key = "<<REPLACE ME>>"
-
-    # location, also known as region.
-    # required if you're using a multi-service or regional (not global) resource.
-    # It can be found in the Azure portal on the Keys and Endpoint page.
-    location = "global"
-
-    headers = {
-                 'Ocp-Apim-Subscription-Key': key,
-                 # location required if you're using a multi-service or
-                 # regional (not global) resource.
-                'Ocp-Apim-Subscription-Region': location,
-                'Content-type': 'application/json',
-                'X-ClientTraceId': str(uuid.uuid4())
+    lbody = [
+              {
+                'text': '''Il t'a demandé de la vendre?
+                           Oui! Putain de merde, c'était énervant. 
+                            
+                           Il m'a dit c'était haute joaillerie. 
+                           J'ai ri, et j'ai répondu, «Merde alors, c'est precieux»
+                           '''
               }
+            ]
 
-    basep = {
-              'api-version': '3.0',
-              'from': 'fr',
-              'to': ['en']
-            }
+    lbase_params = {
+                     'api-version': '3.0',
+                     'from': 'fr',
+                     'to': ['en']
+                   }
+    # Merge the base parameters with the ones we received
+    lparams = lbase_params | xiparams
 
-    # Merge the basic parameters with any that we got in the function call.
-    requestp = basep | xiparams
-
-    # Make the request
-    request = requests.post(url,
-                            timeout=timeout,
-                            headers=headers,
-                            params=requestp,
-                            json=xibody)
-    response = request.json()
-
-    print(json.dumps(response,
-                     sort_keys=True,
-                     ensure_ascii=False,
-                     indent=2,
-                     separators=(',', ': ')))
-
+    print("Issuing translation request")
+    makereq(lservice, lbody, lparams)
 
 def main():
     """
@@ -69,29 +40,19 @@ def main():
     """
 
     # You can pass more than one object in body.
-    body = [
-             {
-               'text': '''Il t'a demandé de la vendre?
-                          Oui! Putain de merde, c'était énervant. 
-                          
-                          Il m'a dit c'était haute joaillerie. 
-                          J'ai ri, et j'ai répondu, «Merde alors, c'est precieux»
-                          '''
-            }
-           ]
 
     print("Case 1: No profanity filtering")
-    params = {
-               'ProfanityAction': 'NoAction'
-             }
-    makereq(body, params)
+    profanity_params = {
+                         'ProfanityAction': 'NoAction'
+                       }
+    az_ai_translate_lookup(profanity_params)
 
     print("Case 2: Profanity is tagged")
-    params = {
-               'ProfanityAction': 'Marked',
-               'ProfanityMarker': 'Asterisk'
-             }
-    makereq(body, params)
+    profanity_params = {
+                         'ProfanityAction': 'Marked',
+                         'ProfanityMarker': 'Asterisk'
+                       }
+    az_ai_translate_lookup(profanity_params)
 
 
 # Start executing at main()
