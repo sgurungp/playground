@@ -1,0 +1,5 @@
+## zathurarc - startup config settings for Zathura doc viewer.
+
+# Increase window size from the default 800x600.
+set window-width  1067
+set window-height 800
