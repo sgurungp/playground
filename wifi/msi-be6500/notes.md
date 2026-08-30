@@ -4,13 +4,14 @@ Notes and tips on getting this adapter working on Linux (Mint).
 
 ## Background
 
-The laptop I'm using has an ancient on-board Wi-Fi system that only supports
+Test laptop with an ancient on-board Wi-Fi system that only supports
 2.4GHz 802.11n - i.e., slow Wi-Fi. I bought an MSI BE6500 USB adapter to see 
 if I could improve things.
 
 It uses a Realtek RTL8812 chipset. This is not supported out of the box in 
-the version of Linux I have (Mint 22.3/Zena with kernel 6.8.something). So,
-some assembly is required.
+Mint 22.3/Zena with kernel 6.8.something. So, some assembly is required.
+
+For deeper technical info, see [morrownr/USB-WiFi on GitHub](https://github.com/morrownr/USB-WiFi).
 
 ## Set up build environment
 
@@ -56,7 +57,7 @@ My laptop had a combined Wi-Fi and Bluetooth adapter built-in. Since I never use
 Bluetooth, and I no longer need the old Wi-Fi, it was safe to disable it, by
 ensuring the kernel modules never loaded.
 
-    sudo vi `/etc/modprobe.d/blacklist-ath-wifi.conf`
+    sudo vi /etc/modprobe.d/blacklist-ath-wifi.conf
 
 Use these lines:
     
@@ -77,7 +78,7 @@ Use these lines:
 ## Reboot (2)
 
 When you reboot here, you will lose your Wi-Fi since the old interface
-will not come up and the new one hasn´t been configured yet.
+will not come up and the new one hasn't been configured yet.
 
 ## Verify the new Wi-Fi is present
     lsmod | grep rtw
@@ -99,7 +100,7 @@ You can verify status with, say
     ip link show
     ip addr show
 
-..or the rather wonderful `nmcli` tool:
+...or the rather wonderful `nmcli` tool:
 
     nmcli device wifi
 
